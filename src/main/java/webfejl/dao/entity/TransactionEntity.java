@@ -14,7 +14,8 @@ import javax.persistence.*;
 public class TransactionEntity {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column()
     private int TransactionID;
 
     @Column
@@ -23,20 +24,17 @@ public class TransactionEntity {
     @Column
     private java.sql.Time Time;
 
-    @ManyToOne
-    @JoinColumn(name="CustomerID")
-    private  CustomerEntity CustomerID;
+    @Column
+    private int CustomerID;
 
     @Column
     private int CardID;
 
-    @ManyToOne
-    @JoinColumn(name="GasStationID")
-    private GasStationEntity GasStationID;
-
-    @ManyToOne
-    @JoinColumn(name="ProductID")
-    private ProductEntity ProductID;
+    //@ManyToOne
+    //@JoinColumn(name="ProductID")
+    @Column
+    private int ProductID;
+    //private ProductEntity ProductID;
 
     @Column
     private int Amount;

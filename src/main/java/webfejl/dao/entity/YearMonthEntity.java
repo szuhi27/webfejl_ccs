@@ -23,7 +23,7 @@ public class YearMonthEntity {
     private CustomerEntity CustomerId;
 
     @Column
-    private java.sql.Date Date;
+    private int Date;
 
     @Column(precision=12, scale=2)
     private Double Consumption;
