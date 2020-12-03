@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Customers {
+public class Customer {
 
     private int CustomerID;
     private String Segment;

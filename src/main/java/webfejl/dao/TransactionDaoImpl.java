@@ -3,7 +3,7 @@ package webfejl.dao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import webfejl.exceptions.UnknownCustomerException;
+import webfejl.exceptions.WrongCustomerException;
 import webfejl.exceptions.UnknownProductException;
 import webfejl.exceptions.UnknownTransactionException;
 import webfejl.model.*;
@@ -64,13 +64,13 @@ public class TransactionDaoImpl implements TransactionDao {
     }
 
 
-    protected int findCustomer(int customer) throws UnknownCustomerException {
+    protected int findCustomer(int customer) throws WrongCustomerException {
 
         Optional<CustomerEntity> customerEntity = customerRepository.findById(customer);
         if(customerEntity.isPresent()){
             return customer;
         } else {
-            throw new UnknownCustomerException("No such customer");
+            throw new WrongCustomerException("No such customer");
         }
 
     }

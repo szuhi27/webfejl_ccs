@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import webfejl.controller.dto.CustomerDeleteDto;
 import webfejl.controller.dto.CustomersDto;
-import webfejl.controller.dto.TransactionDto;
-import webfejl.exceptions.UnknownCustomerException;
-import webfejl.model.Customers;
+import webfejl.exceptions.WrongCustomerException;
+import webfejl.model.Customer;
 import webfejl.service.CustomerService;
 
 import java.util.Collection;
@@ -35,5 +35,30 @@ public class CustomersController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping("/addCustomer")
+    public void addCustomer(@RequestBody CustomersDto customersDto){
+        try {
+            customerService.recordCustomer(new Customer(
+                    customersDto.getCustomerID(),
+                    customersDto.getSegment(),
+                    customersDto.getCurrency()
+            ));
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/deleteCustomer")
+    public void deleteCustomer(@RequestBody CustomerDeleteDto customerDeleteDto){
+        try {
+            customerService.deleteCustomer(new Customer(
+                    customerDeleteDto.getCustomerID(),
+                    "",""
+            ));
+        } catch (WrongCustomerException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+    }
 
 }

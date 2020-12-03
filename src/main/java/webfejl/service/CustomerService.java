@@ -1,12 +1,16 @@
 package webfejl.service;
 
-import webfejl.exceptions.UnknownCustomerException;
-import webfejl.model.Customers;
+import org.hibernate.persister.walking.spi.WalkingException;
+import webfejl.exceptions.WrongCustomerException;
+import webfejl.model.Customer;
 
 import java.util.Collection;
 
 public interface CustomerService {
 
-    Collection<Customers> getAllCustomers();
+    Collection<Customer> getAllCustomers();
 
+    void recordCustomer(Customer customer) throws Exception;
+
+    void deleteCustomer(Customer customer) throws WrongCustomerException;
 }

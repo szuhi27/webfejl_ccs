@@ -23,11 +23,6 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello world!";
-    }
-
     @GetMapping("/transactions")
     public Collection<TransactionDto> listTransactions(){
         return transactionService.getAllTransaction()

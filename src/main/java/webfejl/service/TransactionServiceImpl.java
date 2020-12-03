@@ -3,9 +3,7 @@ package webfejl.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import webfejl.dao.TransactionDao;
-import webfejl.exceptions.UnknownCustomerException;
 import webfejl.exceptions.UnknownTransactionException;
-import webfejl.model.Customers;
 import webfejl.model.Transaction;
 
 import java.util.Collection;

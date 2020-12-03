@@ -1,7 +1,6 @@
 package webfejl.dao;
 
 
-import webfejl.exceptions.UnknownCustomerException;
 import webfejl.exceptions.UnknownTransactionException;
 import webfejl.model.*;
 
