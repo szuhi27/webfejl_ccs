@@ -9,9 +9,9 @@ import lombok.ToString;
 @ToString
 @Getter
 @EqualsAndHashCode
-public class Products {
+public class Product {
 
-    private String ProductID;
+    private int ProductID;
     private String Description;
 
 }

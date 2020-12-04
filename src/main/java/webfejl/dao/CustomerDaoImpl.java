@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import webfejl.dao.entity.CustomerEntity;
+import webfejl.dao.entity.TransactionEntity;
 import webfejl.exceptions.WrongCustomerException;
 import webfejl.exceptions.WrongIdException;
 import webfejl.model.Customer;
@@ -19,6 +20,7 @@ import java.util.stream.StreamSupport;
 public class CustomerDaoImpl implements CustomerDao{
 
     private final CustomerRepository customerRepository;
+    private final TransactionRepository transactionRepository;
 
     @Override
     public Collection<Customer> readAll(){
@@ -62,19 +64,27 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public void deleteCustomer(Customer customer) throws WrongCustomerException{
+    public void deleteCustomer(Customer customer) throws WrongCustomerException {
 
-        Optional<CustomerEntity> customerEntity = StreamSupport.stream(customerRepository.findAll().spliterator(),false).filter(
+        Optional<CustomerEntity> customerEntity = StreamSupport.stream(customerRepository.findAll().spliterator(), false).filter(
+                entity -> {
+                    return customer.getCustomerID() == entity.getCustomerID();
+                }
+        ).findAny();
+
+        Optional<TransactionEntity> transactionEntity = StreamSupport.stream(transactionRepository.findAll().spliterator(),false).filter(
                 entity ->{
                     return customer.getCustomerID() == entity.getCustomerID();
                 }
         ).findAny();
-        if (!customerEntity.isPresent()){
+
+        if (!customerEntity.isPresent()) {
             throw new WrongCustomerException("No such customer");
+        } else if (transactionEntity.isPresent()){
+            throw new WrongCustomerException("Customer in use, delete transaction first!");
+        } else {
+            customerRepository.delete(customerEntity.get());
         }
-        customerRepository.delete(customerEntity.get());
-
-
     }
 
 }
